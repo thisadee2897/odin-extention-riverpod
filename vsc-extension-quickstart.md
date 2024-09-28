@@ -25,18 +25,46 @@ Once installed, you can create a new `ConsumerStatefulWidget` by typing the shor
 3. This will generate the following code structure:
 
 ```dart
-import 'package:oho_hero/config/routes/export.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../components/base_full_widget.dart';
 
-class MyHome extends BaseStatefulWidget {
-  const MyHome({super.key});
+class ${screenName}Screen extends BaseStatefulWidget {
+  const ${screenName}Screen({super.key});
 
   @override
-  ConsumerState<BaseStatefulWidget> createState() => _MyHomeState();
+  ConsumerState<BaseStatefulWidget> createState() => _${screenName}ScreenState();
 }
 
-class _MyHomeState extends ConsumerState<MyHome> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+class _${screenName}ScreenState extends ConsumerState<${screenName}Screen> {
+@override
+initsate() {
+    super.initState();
+}
+
+
+    @override
+  Widget buildDesktop(BuildContext context, SizingInformation sizingInformation) {
+    return content(
+      buildDesktop: true,
+    );
   }
-}
+
+  @override
+  Widget? buildTablet(BuildContext context, SizingInformation sizingInformation) {
+    return content();
+  }
+
+  @override
+  Widget buildMobile(BuildContext context, SizingInformation sizingInformation) {
+    return content();
+  }
+
+  Widget content({bool buildDesktop = false}) {
+    return Container(
+      child: Center(
+        child: Text(),
+      ),
+    );
+  }
+}`;

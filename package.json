@@ -2,14 +2,16 @@
   "name": "odin-riverpod",
   "displayName": "odin riverpod",
   "description": "short key for create page riverpod ConsumerStatefulWidget",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.93.0"
   },
   "categories": [
     "Snippets"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:extension.createScreen"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "snippets": [
@@ -17,10 +19,29 @@
         "language": "dart",
         "path": "./snippets/base_stateful_widget.json"
       }
-    ]
+    ],
+    "commands": [
+      {
+        "command": "extension.createScreen",
+        "title": "Create Screen"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.createScreen",
+          "when": "resourceLangId == dart",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/thisadee2897/odin-riverpod.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
   }
 }

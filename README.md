@@ -21,11 +21,13 @@ Odin Riverpod is a Visual Studio Code extension that provides shortcuts for crea
 Once installed, you can create a new `ConsumerStatefulWidget` by typing the shortcut in your Dart files:
 
 1. Open a Dart file.
-2. Type `bstf` and press `Tab` (or the equivalent key for your snippet expansion).
+2. Type `newbase` and press `Tab` (or the equivalent key for your snippet expansion).
 3. This will generate the following code structure:
 
 ```dart
-import 'package:oho_hero/config/routes/export.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../components/base_full_widget.dart';
 
 class MyHome extends BaseStatefulWidget {
   const MyHome({super.key});

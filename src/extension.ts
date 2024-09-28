@@ -1,26 +1,65 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as path from 'path';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    let disposable = vscode.commands.registerCommand('extension.createScreen', async (uri: vscode.Uri) => {
+        const screenName = await vscode.window.showInputBox({ prompt: 'Enter the screen name' });
+        if (screenName) {
+            const workspaceFolders = vscode.workspace.workspaceFolders;
+            let projectName = 'project';
+            if (workspaceFolders && workspaceFolders.length > 0) {
+                // Get the folder name of the first workspace
+                projectName = path.basename(workspaceFolders[0].uri.fsPath);
+            }
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "odin-riverpod" is now active!');
+            const screenFileName = `${screenName}_screen.dart`;
+            const screenContent = `
+import 'package:flutter/material.dart';
+import 'package:${projectName}/components/base_full_widget.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+class ${screenName}Screen extends BaseStatefulWidget {
+  const ${screenName}Screen({Key? key}) : super(key: key, subPage: false);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('odin-riverpod.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from odin riverpod!');
-	});
-
-	context.subscriptions.push(disposable);
+  @override
+  _${screenName}ScreenState createState() => _${screenName}ScreenState();
 }
 
-// This method is called when your extension is deactivated
+class _${screenName}ScreenState extends BaseState<${screenName}Screen> {
+  TextEditingController provinceCtl = TextEditingController();
+  
+  @override
+  Widget buildDesktop(BuildContext context, SizingInformation sizingInformation) {
+    return content(
+      buildDesktop: true,
+    );
+  }
+
+  @override
+  Widget? buildTablet(BuildContext context, SizingInformation sizingInformation) {
+    return content();
+  }
+
+  @override
+  Widget buildMobile(BuildContext context, SizingInformation sizingInformation) {
+    return content();
+  }
+
+  Widget content({bool buildDesktop = false}) {
+    return Container(
+      child: Center(
+        child: Text('${screenName}Screen'),
+      ),
+    );
+  }
+}`;
+
+            const screenFilePath = vscode.Uri.joinPath(uri, screenFileName);
+            await vscode.workspace.fs.writeFile(screenFilePath, Buffer.from(screenContent, 'utf8'));
+            vscode.window.showInformationMessage(`Screen ${screenFileName} created successfully!`);
+        }
+    });
+
+    context.subscriptions.push(disposable);
+}
+
 export function deactivate() {}
