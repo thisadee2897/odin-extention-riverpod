@@ -1,0 +1,22 @@
+{
+       "BaseStatefulWidget": {
+              "prefix": "bstf",
+              "body": [
+                     "",
+                     "class ${1:MyHome} extends BaseStatefulWidget {",
+                     "  const ${1:MyHome}({super.key});",
+                     "",
+                     "  @override",
+                     "  ConsumerState<BaseStatefulWidget> createState() => _${1:MyHome}State();",
+                     "}",
+                     "",
+                     "class _${1:MyHome}State extends ConsumerState<${1:MyHome}> {",
+                     "  @override",
+                     "  Widget build(BuildContext context) {",
+                     "    return Container();",
+                     "  }",
+                     "}"
+              ],
+              "description": "BaseStatefulWidget with ConsumerState"
+       }
+}
